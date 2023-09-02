@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Photos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='smooth-scroll.js') }}"></script>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <section class="section">
+        <!-- Upload Button -->
+        <div class="upload-section">
+            <label for="photo-upload" class="upload-button">Upload Photo</label>
+            <input type="file" id="photo-upload" accept="image/*" />
+        </div>
+
+        <!-- Your photo gallery content -->
+        <div class="photo-gallery">
+            <!-- photo cards here with appropriate styling and captions -->
+            <!-- Sample photo card -->
+
+            <!-- Add more photo cards as needed -->
+        </div>
+    </section>
+
+    <!-- Modal for Photo Options and Caption -->
+    <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="photoModalLabel">Photo Options</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Options to create a new collection or add to an existing collection -->
+                    <!-- Input field for adding a caption to the photo -->
+                    <input type="text" class="form-control" id="photoCaption" placeholder="Add a caption...">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="savePhotoChanges">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include 'footer.html' %}
+
+    <script>
+        $(document).ready(function () {
+            // Show modal when the upload button is clicked
+            $("#photo-upload").off("change").on("change", function () {
+                $("#photoModal").modal("show");
+            });
+
+            // Save changes when the "Save Changes" button in the modal is clicked
+            $("#savePhotoChanges").on("click", function () {
+                // Get the photo file and caption
+                var photoFile = $("#photo-upload").prop("files")[0];
+                var photoCaption = $("#photoCaption").val();
+
+                // Perform actions to save the photo and its options/caption
+                // You can use AJAX to send the data to the server for saving.
+
+                // Create a new photo card with the uploaded photo and caption
+                var photoCard = '<div class="photo-card">';
+                photoCard += '<img src="' + URL.createObjectURL(photoFile) + '" alt="Photo" style="max-width: 100%;">';
+                photoCard += '<div class="photo-caption">' + photoCaption + '</div>';
+                photoCard += '<button class="delete-button">Delete</button>';
+                photoCard += '</div>';
+
+                // Append the new photo card to the photo gallery
+                $(".photo-gallery").append(photoCard);
+
+                // Close the modal
+                $("#photoModal").modal("hide");
+            });
+
+            // Handle click event for the delete button
+            $(".photo-gallery").on("click", ".delete-button", function () {
+                // Remove the photo card when delete button is clicked
+                $(this).closest(".photo-card").remove();
+            });
+        });
+    </script>
+</body>
+</html>
