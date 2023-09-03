@@ -1,7 +1,7 @@
 # Build settings
 [build]
 
-  command = "gunicorn -c Personal Website/gunicorn_config.py app:app"
+  command = "gunicorn -c Portfolion/gunicorn_config.py app:app"
   publish = "static"        # Replace with the path to your static files (JS, CSS, etc.)
 
 # Optional: Environment variables
