@@ -1,6 +1,7 @@
 # Build settings
 [build]
-  command = "python app.py" # Replace with your Flask application start command
+
+  command = "gunicorn -c Personal Website/gunicorn_config.py app:app"
   publish = "static"        # Replace with the path to your static files (JS, CSS, etc.)
 
 # Optional: Environment variables
